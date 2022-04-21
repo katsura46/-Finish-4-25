@@ -1,0 +1,47 @@
+<% if flash[:notice] %>
+     <p id="notice">
+       <%= flash[:notice] %>
+     </p>
+<% end %>
+<% if @newbook.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= @newbook.errors.count %> errors prohibited this book from being saved:</h2>
+        <ul>
+          <% @newbook.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+<% end %>
+<%= render 'lists', user: @user, book: @newbook %>
+
+<div class="col-md-8 offset-md-1">
+  <h2>Book detail</h2>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td>
+          <%= image_tag @user.get_profile_image(100,100) %><br>
+          <%= link_to @user.name, user_path(@user.id) %>
+        </td>
+        <td>
+          <%= link_to @book.title, book_path %>
+        </td>
+        <td>
+          <%= @book.body %>
+        </td>
+
+         <% if @book.user == current_user %>
+        <td>
+          <%= link_to "Edit", edit_book_path(@book.id), class: "btn btn-sm btn-success edit_book" %>
+        </td>
+        <td>
+          <%= link_to "Destroy", book_path(@book.id), method: :delete, class: "btn btn-sm btn-danger destroy_book" %>
+        </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
